@@ -11,17 +11,19 @@ import javax.swing.JLabel;
 import java.awt.Dimension;
 import javax.swing.JTextField;
 
-import problem1.poslovna_logika.TextDemo;
+import problem1.business_logic.TextDemo;
 
 import java.awt.FlowLayout;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.awt.event.ActionEvent;
 
 public class TextEditorGUI {
 
 	private JFrame frmeditor;
 	private JTextField textFieldNameEntry;
+	private JTextArea textAreaEditor;
 
 	/**
 	 * Launch the application.
@@ -52,14 +54,14 @@ public class TextEditorGUI {
 	private void initialize() {
 		frmeditor = new JFrame();
 		frmeditor.setTitle("Editor 2");
-		frmeditor.setBounds(100, 100, 450, 300);
+		frmeditor.setBounds(100, 100, 696, 480);
 		frmeditor.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmeditor.getContentPane().setLayout(new BorderLayout(0, 0));
 		
 		JScrollPane scrollPane = new JScrollPane();
 		frmeditor.getContentPane().add(scrollPane, BorderLayout.CENTER);
 		
-		JTextArea textAreaEditor = new JTextArea();
+		textAreaEditor = new JTextArea();
 		scrollPane.setViewportView(textAreaEditor);
 		
 		JPanel panel = new JPanel();
@@ -80,8 +82,12 @@ public class TextEditorGUI {
 			public void actionPerformed(ActionEvent e) {
 				TextDemo td = new TextDemo();
 				String name = textFieldNameEntry.getText();
-				String text = td.readText(name);
-				textAreaEditor.setText(text);
+				try {
+					String text = td.readText(name);
+					textAreaEditor.setText(text);
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
 			}
 		});
 		btnRead.setPreferredSize(new Dimension(100, 26));
@@ -102,7 +108,12 @@ public class TextEditorGUI {
 				TextDemo td = new TextDemo();
 				String text = textAreaEditor.getText();
 				String name = textFieldNameEntry.getText();
-				td.writeText(name, text);				
+				try {
+					td.writeText(name, text);
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		});
 		btnSave.setPreferredSize(new Dimension(100, 26));
@@ -114,8 +125,28 @@ public class TextEditorGUI {
 				System.exit(0);				
 			}
 		});
+		
+
+		JButton btnReplace = new JButton("Replace");
+		btnReplace.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ReplaceDialog dialog = new ReplaceDialog(TextEditorGUI.this);
+				dialog.setVisible(true);
+			}
+		});
+		btnReplace.setPreferredSize(new Dimension(100, 23));
+		panel.add(btnReplace);
+		
 		btnExit.setPreferredSize(new Dimension(100, 26));
 		panel.add(btnExit);
+		
+		
+	}
+	
+	public void replaceString(String replaceWith, String replace) {
+		String text = textAreaEditor.getText();
+		String newText = text.replaceAll(replaceWith, replace);
+		textAreaEditor.setText(newText);
 	}
 
 }
