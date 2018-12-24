@@ -14,23 +14,35 @@ for the line end, which the return String should contain. If an error occurs dur
 This method writes the provided text into the file determined by the first argument. If an error occurs during input, the method should throw an appropriate exception.
 
 Create a visual class **TextEditorGUI** in package **problem1.gui**, that appears as displayed in the figure.
-The central screen area should be the text editor. When the form is resized, this central part should be enlarged/shrinked, while other components should stay in place.
+The central screen area should be the text editor. When the form is resized, this central part should be enlarged/shrinked, while other components should stay in place, as shown in the following figures.
 
+![Editor Gui](../images/editor-gui1.png)
+![Editor Gui](../images/editor-gui2.png)
 
-1. When the "Delete" button is clicked, the text from the editor should be erased.
-![Editor Gui](editor-gui.png)
+1. The class should have a private attribute **textDemo** of type **TextDemo**, that is initialized in the declaration.
 
-2. When the "Read" button is clicked, the name of a text file should be taken from the input field, and the
+2. When the "Delete" button is clicked, the text from the editor should be erased.
+
+3. When the "Read" button is clicked, the name of a text file should be taken from the input field, and the
 text that it contains should be displayed in the editor. Reading should be done using the methods from
 class **TextDemo**.
 
-3. When the "Save" button is clicked, the text that is displayed in the editor should be saved in the file whose
+4. When the "Save" button is clicked, the text that is displayed in the editor should be saved in the file whose
 name is in the input field. Reading and writing should be done by calling the methods from the class TextDemo.
 Reading should be done using the methods from
 class **TextDemo**.
 
-4 When the "Replace" menu item is clicked, a dialog should open, in which the user enters a string that
+5. When the "Replace" button is clicked, a dialog should open, in which the user enters a string that
 should be replaced, a string that should replace it, and then, after the **OK** button is clicked, replaces
 all occurrences of the string in the text in the editor.
 
-5. When the "Exit" button is clicked, the program execution halts. **(System.exit(0))**
+6. When the "Exit" button is clicked, the program asks the user for confirmation, and if the user chooses to quit, the execution halts. **(System.exit(0))**
+
+![Dialog zamena](../images/replace-dialog.png)
+
+## Problem 2
+*(students solve on their own)*
+
+1. Add the **Analysis** button, which, when clicked, counts the number of characters and words in the text and opens new dialog which displays this data.
+
+![Dialog analiza](../images/analysis.png)

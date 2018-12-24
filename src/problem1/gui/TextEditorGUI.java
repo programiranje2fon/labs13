@@ -8,8 +8,11 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Dimension;
 import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
 
 import problem1.business_logic.TextDemo;
 
@@ -19,11 +22,26 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.awt.event.ActionEvent;
 
-public class TextEditorGUI {
+public class TextEditorGUI extends JFrame {
 
-	private JFrame frmeditor;
-	private JTextField textFieldNameEntry;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	private TextDemo textDemo = new TextDemo();
+
+	private JPanel contentPane;
+	private JPanel panel;
 	private JTextArea textAreaEditor;
+	private JLabel lblFileName;
+	private JTextField textFieldNameEntry;
+	private JButton btnRead;
+	private JButton btnDelete;
+	private JButton btnSave;
+	private JButton btnZameni;
+	private JButton btnTextAnalysis;
+	private JButton btnIzadji;
 
 	/**
 	 * Launch the application.
@@ -32,8 +50,8 @@ public class TextEditorGUI {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					TextEditorGUI window = new TextEditorGUI();
-					window.frmeditor.setVisible(true);
+					TextEditorGUI frame = new TextEditorGUI();
+					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -45,104 +63,151 @@ public class TextEditorGUI {
 	 * Create the application.
 	 */
 	public TextEditorGUI() {
-		initialize();
+		setTitle("Text Editor");
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 450, 300);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		contentPane.setLayout(new BorderLayout(0, 0));
+		setContentPane(contentPane);
+		contentPane.add(getPanel(), BorderLayout.WEST);
+		contentPane.add(getTextAreaEditor(), BorderLayout.CENTER);
 	}
 
-	/**
-	 * Initialize the contents of the frame.
-	 */
-	private void initialize() {
-		frmeditor = new JFrame();
-		frmeditor.setTitle("Editor 2");
-		frmeditor.setBounds(100, 100, 696, 480);
-		frmeditor.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frmeditor.getContentPane().setLayout(new BorderLayout(0, 0));
-		
-		JScrollPane scrollPane = new JScrollPane();
-		frmeditor.getContentPane().add(scrollPane, BorderLayout.CENTER);
-		
-		textAreaEditor = new JTextArea();
-		scrollPane.setViewportView(textAreaEditor);
-		
-		JPanel panel = new JPanel();
-		panel.setPreferredSize(new Dimension(120, 36));
-		frmeditor.getContentPane().add(panel, BorderLayout.WEST);
-		panel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-		
-		JLabel lblFileName = new JLabel("File name");
-		lblFileName.setPreferredSize(new Dimension(100, 16));
-		panel.add(lblFileName);
-		
-		textFieldNameEntry = new JTextField();
-		panel.add(textFieldNameEntry);
-		textFieldNameEntry.setColumns(10);
-		
-		JButton btnRead = new JButton("Read");
-		btnRead.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				TextDemo td = new TextDemo();
-				String name = textFieldNameEntry.getText();
-				try {
-					String text = td.readText(name);
-					textAreaEditor.setText(text);
-				} catch (IOException e1) {
-					e1.printStackTrace();
-				}
-			}
-		});
-		btnRead.setPreferredSize(new Dimension(100, 26));
-		panel.add(btnRead);
-		
-		JButton btnDelete = new JButton("Delete");
-		btnDelete.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				textAreaEditor.setText(null);
-			}
-		});
-		btnDelete.setPreferredSize(new Dimension(100, 26));
-		panel.add(btnDelete);
-		
-		JButton btnSave = new JButton("Save");
-		btnSave.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				TextDemo td = new TextDemo();
-				String text = textAreaEditor.getText();
-				String name = textFieldNameEntry.getText();
-				try {
-					td.writeText(name, text);
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-			}
-		});
-		btnSave.setPreferredSize(new Dimension(100, 26));
-		panel.add(btnSave);
-		
-		JButton btnExit = new JButton("Exit");
-		btnExit.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				System.exit(0);				
-			}
-		});
-		
-
-		JButton btnReplace = new JButton("Replace");
-		btnReplace.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				ReplaceDialog dialog = new ReplaceDialog(TextEditorGUI.this);
-				dialog.setVisible(true);
-			}
-		});
-		btnReplace.setPreferredSize(new Dimension(100, 23));
-		panel.add(btnReplace);
-		
-		btnExit.setPreferredSize(new Dimension(100, 26));
-		panel.add(btnExit);
-		
-		
+	private JPanel getPanel() {
+		if (panel == null) {
+			panel = new JPanel();
+			panel.setPreferredSize(new Dimension(120, 10));
+			panel.add(getLblFIleName());
+			panel.add(getTextFieldNameEntry());
+			panel.add(getBtnRead());
+			panel.add(getBtnDelete());
+			panel.add(getBtnSave());
+			panel.add(getBtnReplace());
+			panel.add(getBtnTextAnalysis());
+			panel.add(getBtnExit());
+		}
+		return panel;
 	}
 	
+	private JTextArea getTextAreaEditor() {
+		if (textAreaEditor == null) {
+			textAreaEditor = new JTextArea();
+		}
+		return textAreaEditor;
+	}
+	private JLabel getLblFIleName() {
+		if (lblFileName == null) {
+			lblFileName = new JLabel("File name:");
+		}
+		return lblFileName;
+	}
+	private JTextField getTextFieldNameEntry() {
+		if (textFieldNameEntry == null) {
+			textFieldNameEntry = new JTextField();
+			textFieldNameEntry.setPreferredSize(new Dimension(100, 20));
+			textFieldNameEntry.setColumns(10);
+		}
+		return textFieldNameEntry;
+	}
+	private JButton getBtnRead() {
+		if (btnRead == null) {
+			btnRead = new JButton("Read");
+			btnRead.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					String name = textFieldNameEntry.getText();
+					try {
+						String text = textDemo.readText(name);
+						textAreaEditor.setText(text);
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					}
+
+				}
+			});
+			btnRead.setPreferredSize(new Dimension(100, 23));
+		}
+		return btnRead;
+	}
+	private JButton getBtnDelete() {
+		if (btnDelete == null) {
+			btnDelete = new JButton("Delete");
+			btnDelete.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					textAreaEditor.setText("");
+				}
+			});
+			btnDelete.setPreferredSize(new Dimension(100, 23));
+		}
+		return btnDelete;
+	}
+	private JButton getBtnSave() {
+		if (btnSave == null) {
+			btnSave = new JButton("Save");
+			btnSave.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					String text = textAreaEditor.getText();
+					String name = textFieldNameEntry.getText();
+					try {
+						 textDemo.writeText(name, text);
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}		
+				}
+			});
+			btnSave.setPreferredSize(new Dimension(100, 23));
+		}
+		return btnSave;
+	}
+	private JButton getBtnReplace() {
+		if (btnZameni == null) {
+			btnZameni = new JButton("Replace");
+			btnZameni.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					ReplaceDialog dialog = new ReplaceDialog(TextEditorGUI.this);
+					dialog.setVisible(true);
+				}
+			});
+			btnZameni.setPreferredSize(new Dimension(100, 23));
+		}
+		return btnZameni;
+	}
+	private JButton getBtnTextAnalysis() {
+		if (btnTextAnalysis == null) {
+			btnTextAnalysis = new JButton("Analysis");
+			btnTextAnalysis.setActionCommand("Analysis");
+			btnTextAnalysis.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					String text = textAreaEditor.getText();
+					int characterCount = text.length();
+					int wordCount = text.split(" ").length;
+				    JOptionPane.showMessageDialog(null, "Character count: " + characterCount + " Word count: " + wordCount , "Text analysis:",
+				            JOptionPane.INFORMATION_MESSAGE);
+
+				}
+			});
+			btnTextAnalysis.setPreferredSize(new Dimension(100, 23));
+		}
+		return btnTextAnalysis;
+	}
+	private JButton getBtnExit() {
+		if (btnIzadji == null) {
+			btnIzadji = new JButton("Exit");
+			btnIzadji.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+				    int response = JOptionPane.showConfirmDialog(null, "Would you like to exit the program?", "Confirm",
+				            JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+				        if (response == JOptionPane.YES_OPTION) {
+				        	System.exit(0);	
+				        }
+				}
+			});
+			btnIzadji.setPreferredSize(new Dimension(100, 23));
+		}
+		return btnIzadji;
+	}
+
 	public void replaceString(String replaceWith, String replace) {
 		String text = textAreaEditor.getText();
 		String newText = text.replaceAll(replaceWith, replace);
