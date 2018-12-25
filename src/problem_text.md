@@ -12,6 +12,7 @@ Write public class **TextDemo** in package **problem1.business_logic**, that has
 Create a visual class **TextEditorGUI** in package **problem1.gui**, that appears as displayed in the figure. The central screen area should be the text editor. When the form is resized, this central part should be enlarged/shrinked, while other components should stay in place, as shown in the following figure.
 
 ![Editor Gui](../images/text-editor-gui.jpg)
+![Editor Gui](../images/text-editor-gui-large.jpg)
 
 - The class should have a private attribute **textDemo** of type **TextDemo**, that is initialized in the declaration.
 
@@ -21,13 +22,15 @@ Create a visual class **TextEditorGUI** in package **problem1.gui**, that appear
 
 - When the "Save" button is clicked, the text that is displayed in the editor should be saved in the file whose name is in the input field. Writing should be performed by calling the appropriate method from the class **TextDemo**. In case of an error, display the JOptionPane dialog with an appropriate message.
 
+![Editor Gui](../images/error-writing-dialog.jpg)
+
 - When the "Replace" button is clicked, a dialog should open. There, the user enters a String that should be replaced and a String that it should be replaced with. After the **OK** button is clicked, replacing of the string in the text in the editor should be performed.
 
 ![Dialog replace](../images/replace-string-dialog.jpg)
 
 - When the "Exit" button is clicked, the program asks the user for confirmation. If the user chooses to quit, the execution halts.
 
-![Dialog replace](../images/confirm-exit.jpg)
+![Dialog replace](../images/confirm-exit-dialog.jpg)
 
 ## Problem 2
 *(students solve on their own)*
