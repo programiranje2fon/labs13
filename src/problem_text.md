@@ -12,6 +12,7 @@ Create public class **TextDemo**, in package **problem1.business_logic**, that h
 Create a visual class **TextEditorGUI** in package **problem1.gui**, that looks as shown on the figure below. The central screen area should be the text editor. When the form is resized, this central part should be enlarged/shrunk, while other components should stay in place, as shown in the following figure.
 
 ![Editor Gui](../images/text-editor-gui.jpg)
+![Editor Gui](../images/text-editor-gui-large.jpg)
 
 - The class should have a private attribute **textDemo** of type **TextDemo**, that is initialized in the declaration.
 
@@ -19,7 +20,11 @@ Create a visual class **TextEditorGUI** in package **problem1.gui**, that looks 
 
 - When the "Read" button is clicked, the name of a text file should be taken from the input field, and the text from the file should be displayed in the editor. Reading should be done using the appropriate method from the **TextDemo** class. In case of an error, the error message should be displayed in an JOptionPane dialog.
 
+![Editor Gui](../images/error-reading-dialog.jpg)
+
 - When the "Save" button is clicked, the text that is displayed in the editor should be saved in the file whose name is given in the input field. Writing should be performed by calling the appropriate method from the class **TextDemo**. In case of an error, the error message should be displayed in an JOptionPane dialog.
+
+![Editor Gui](../images/error-writing-dialog.jpg)
 
 - When the "Replace" button is clicked, a dialog should open (see the figure below). There, the user enters a String that should be replaced and a String that it should be replaced with. After the **OK** button is clicked, string replacement should be applied to the text in the editor.
 
@@ -27,7 +32,7 @@ Create a visual class **TextEditorGUI** in package **problem1.gui**, that looks 
 
 - When the "Exit" button is clicked, the program asks the user for confirmation to quit the program. If the user chooses to quit, the execution halts.
 
-![Dialog replace](../images/confirm-exit.jpg)
+![Dialog replace](../images/confirm-exit-dialog.jpg)
 
 ## Problem 2
 *(students do on their own)*
