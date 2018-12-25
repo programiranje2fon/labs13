@@ -1,8 +1,14 @@
 package problem1.business_logic;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import org.junit.After;
 import org.junit.Before;
@@ -10,11 +16,11 @@ import org.junit.Test;
 
 public class TextDemoTest {
 
-	private TextDemo textDemo;
+	private TextDemo tekstDemo;
 
 	@Before
 	public void setUp() throws Exception {
-		textDemo = new TextDemo();
+		tekstDemo = new TextDemo();
 	}
 
 	@After
@@ -22,26 +28,53 @@ public class TextDemoTest {
 	}
 
 	@Test
-	public void metoda_ucitajTekst() throws IOException {
+	public void metoda_ucitajTekst() {
+		String ucitaniTekst;
 		try {
-			String readText = textDemo.readText("text.txt");
-			String expectedText = "This is some text in a file. This text should be read and displayed on the screen.\n";
-			assertEquals("Nije ucitan ocekivani tekst", expectedText, readText);
+			upisiTekst("tekst.txt", "Ovo je neki tekst koji se nalazi u fajlu. Ovaj tekst treba ucitati i ispisati na ekranu.\n");
+			ucitaniTekst = tekstDemo.readText("tekst.txt");
+			String ocekivaniTekst = "Ovo je neki tekst koji se nalazi u fajlu. Ovaj tekst treba ucitati i ispisati na ekranu.\n";
+			assertEquals("Nije ucitan ocekivani tekst", ocekivaniTekst, ucitaniTekst);		
+			File file = new File("tekst.txt");
+			file.delete();
 		} catch (IOException e) {
-			fail("Error while reading from file text.txt");
+			fail("Greska prilikom ucitavanja fajla tekst.txt");
 		}
 	}
-
+	
 	@Test
-	public void metoda_upisiTekst() throws IOException {
+	public void metoda_upisiTekst() {
+		String testTekst = "Ovo je neki tekst koji treba upisati u fajl.\n";
 		try {
-			String testText = "This is some text that should be written into a file.\n";
-			textDemo.writeText("text2.txt", testText);
-			String readTekst = textDemo.readText("text2.txt");
-			assertEquals("Nije upisan ocekivani tekst", testText, readTekst);
+			tekstDemo.writeText("tekst2.txt", testTekst);
+			String ucitaniTekst = ucitajTekst("tekst2.txt");
+			assertEquals("Nije upisan ocekivani tekst", testTekst, ucitaniTekst);	
+			File file = new File("tekst2.txt");
+			file.delete();			
 		} catch (IOException e) {
-			fail("Error while writing to file text2.txt");
+			fail("Greska prilikom pisanja u fajl tekst2.txt");
 		}
+	}	
+	
+	private String ucitajTekst(String nazivFajla) throws IOException {
+		BufferedReader in = new BufferedReader(new FileReader(nazivFajla));
+		boolean kraj = false;
+		String tekst = "";
+		while (!kraj) {
+			String pom = in.readLine();
+			if (pom == null)
+				kraj = true;
+			else
+				tekst = tekst + pom + "\n";
+		}
+		in.close();
+		return tekst;
+	}
+
+	private void upisiTekst(String nazivFajla, String tekst) throws IOException {
+		PrintWriter out = new PrintWriter(new FileWriter(nazivFajla));
+		out.write(tekst);
+		out.close();
 	}
 
 }

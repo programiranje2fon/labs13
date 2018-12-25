@@ -1,34 +1,27 @@
 package problem1.gui;
 
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
 import java.awt.BorderLayout;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import javax.swing.JPanel;
+import java.awt.Dimension;
+import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.IOException;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-
-import java.awt.Dimension;
+import javax.swing.JPanel;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import problem1.business_logic.TextDemo;
 
-import java.awt.FlowLayout;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.io.IOException;
-import java.awt.event.ActionEvent;
-
 public class TextEditorGUI extends JFrame {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
-	
+
 	private TextDemo textDemo = new TextDemo();
 
 	private JPanel contentPane;
@@ -89,19 +82,21 @@ public class TextEditorGUI extends JFrame {
 		}
 		return panel;
 	}
-	
+
 	private JTextArea getTextAreaEditor() {
 		if (textAreaEditor == null) {
 			textAreaEditor = new JTextArea();
 		}
 		return textAreaEditor;
 	}
+
 	private JLabel getLblFIleName() {
 		if (lblFileName == null) {
 			lblFileName = new JLabel("File name:");
 		}
 		return lblFileName;
 	}
+
 	private JTextField getTextFieldNameEntry() {
 		if (textFieldNameEntry == null) {
 			textFieldNameEntry = new JTextField();
@@ -110,6 +105,7 @@ public class TextEditorGUI extends JFrame {
 		}
 		return textFieldNameEntry;
 	}
+
 	private JButton getBtnRead() {
 		if (btnRead == null) {
 			btnRead = new JButton("Read");
@@ -120,15 +116,15 @@ public class TextEditorGUI extends JFrame {
 						String text = textDemo.readText(name);
 						textAreaEditor.setText(text);
 					} catch (IOException e1) {
-						e1.printStackTrace();
+						JOptionPane.showMessageDialog(null, "Error reading file contents.", "Error", JOptionPane.ERROR_MESSAGE);
 					}
-
 				}
 			});
 			btnRead.setPreferredSize(new Dimension(100, 23));
 		}
 		return btnRead;
 	}
+
 	private JButton getBtnDelete() {
 		if (btnDelete == null) {
 			btnDelete = new JButton("Delete");
@@ -141,6 +137,7 @@ public class TextEditorGUI extends JFrame {
 		}
 		return btnDelete;
 	}
+
 	private JButton getBtnSave() {
 		if (btnSave == null) {
 			btnSave = new JButton("Save");
@@ -149,17 +146,17 @@ public class TextEditorGUI extends JFrame {
 					String text = textAreaEditor.getText();
 					String name = textFieldNameEntry.getText();
 					try {
-						 textDemo.writeText(name, text);
+						textDemo.writeText(name, text);
 					} catch (IOException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}		
+						JOptionPane.showMessageDialog(null, "Error writing to the file.", "Error", JOptionPane.ERROR_MESSAGE);
+					}
 				}
 			});
 			btnSave.setPreferredSize(new Dimension(100, 23));
 		}
 		return btnSave;
 	}
+
 	private JButton getBtnReplace() {
 		if (btnZameni == null) {
 			btnZameni = new JButton("Replace");
@@ -173,6 +170,7 @@ public class TextEditorGUI extends JFrame {
 		}
 		return btnZameni;
 	}
+
 	private JButton getBtnTextAnalysis() {
 		if (btnTextAnalysis == null) {
 			btnTextAnalysis = new JButton("Analysis");
@@ -182,25 +180,26 @@ public class TextEditorGUI extends JFrame {
 					String text = textAreaEditor.getText();
 					int characterCount = text.length();
 					int wordCount = text.split(" ").length;
-				    JOptionPane.showMessageDialog(null, "Character count: " + characterCount + " Word count: " + wordCount , "Text analysis:",
-				            JOptionPane.INFORMATION_MESSAGE);
-
+					JOptionPane.showMessageDialog(null,
+							"Character count: " + characterCount + ". Word count: " + wordCount + ".", "Text analysis:",
+							JOptionPane.INFORMATION_MESSAGE);
 				}
 			});
 			btnTextAnalysis.setPreferredSize(new Dimension(100, 23));
 		}
 		return btnTextAnalysis;
 	}
+
 	private JButton getBtnExit() {
 		if (btnIzadji == null) {
 			btnIzadji = new JButton("Exit");
 			btnIzadji.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-				    int response = JOptionPane.showConfirmDialog(null, "Would you like to exit the program?", "Confirm",
-				            JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-				        if (response == JOptionPane.YES_OPTION) {
-				        	System.exit(0);	
-				        }
+					int response = JOptionPane.showConfirmDialog(null, "Would you like to exit the program?", "Confirm",
+							JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+					if (response == JOptionPane.YES_OPTION) {
+						System.exit(0);
+					}
 				}
 			});
 			btnIzadji.setPreferredSize(new Dimension(100, 23));

@@ -5,7 +5,6 @@ import java.io.*;
 public class TextDemo {
 
 	public String readText(String fileName) throws IOException {
-
 		BufferedReader in = new BufferedReader(new FileReader(fileName));
 		boolean end = false;
 		String text = "";
@@ -18,11 +17,9 @@ public class TextDemo {
 		}
 		in.close();
 		return text;
-
 	}
 
 	public void writeText(String fileName, String text) throws IOException {
-
 		PrintWriter out = new PrintWriter(new FileWriter(fileName));
 		out.write(text);
 		out.close();
