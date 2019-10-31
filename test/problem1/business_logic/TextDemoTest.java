@@ -1,7 +1,6 @@
 package problem1.business_logic;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -28,31 +27,35 @@ public class TextDemoTest {
 	}
 
 	@Test
-	public void metoda_ucitajTekst() {
+	public void method_readText() {
 		String ucitaniTekst;
 		try {
 			upisiTekst("tekst.txt", "Ovo je neki tekst koji se nalazi u fajlu. Ovaj tekst treba ucitati i ispisati na ekranu.\n");
 			ucitaniTekst = tekstDemo.readText("tekst.txt");
 			String ocekivaniTekst = "Ovo je neki tekst koji se nalazi u fajlu. Ovaj tekst treba ucitati i ispisati na ekranu.\n";
-			assertEquals("Nije ucitan ocekivani tekst", ocekivaniTekst, ucitaniTekst);		
+			assertEquals("The text read is not the same as the file content", ocekivaniTekst, ucitaniTekst);
+			
+			// delete the file
 			File file = new File("tekst.txt");
 			file.delete();
 		} catch (IOException e) {
-			fail("Greska prilikom ucitavanja fajla tekst.txt");
+			fail("Error reading contents of the file tekst.txt");
 		}
 	}
 	
 	@Test
-	public void metoda_upisiTekst() {
+	public void method_writeText() {
 		String testTekst = "Ovo je neki tekst koji treba upisati u fajl.\n";
 		try {
 			tekstDemo.writeText("tekst2.txt", testTekst);
 			String ucitaniTekst = ucitajTekst("tekst2.txt");
-			assertEquals("Nije upisan ocekivani tekst", testTekst, ucitaniTekst);	
+			assertEquals("The file content is not the same as the text passsed as the method argument", testTekst, ucitaniTekst);	
+			
+			// delete the file
 			File file = new File("tekst2.txt");
 			file.delete();			
 		} catch (IOException e) {
-			fail("Greska prilikom pisanja u fajl tekst2.txt");
+			fail("Error writing to the file tekst2.txt");
 		}
 	}	
 	
