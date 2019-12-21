@@ -170,6 +170,10 @@ public class TextEditorGUI extends JFrame {
 		}
 		return btnZameni;
 	}
+	
+	private boolean isWhiteSpace(char c) {
+		return c == ' ' || c == '\n' || c == '\r';
+	}
 
 	private JButton getBtnTextAnalysis() {
 		if (btnTextAnalysis == null) {
@@ -177,12 +181,24 @@ public class TextEditorGUI extends JFrame {
 			btnTextAnalysis.setActionCommand("Analysis");
 			btnTextAnalysis.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
+					
 					String text = textAreaEditor.getText();
-					int characterCount = text.length();
-					int wordCount = text.split(" ").length;
-					JOptionPane.showMessageDialog(null,
-							"Character count: " + characterCount + ". Word count: " + wordCount + ".", "Text analysis:",
-							JOptionPane.INFORMATION_MESSAGE);
+					int charCount = text.length();
+					
+					int wordCount = 0;
+					for (int i = 0; i < text.length(); i++) {
+						if(isWhiteSpace(text.charAt(i)))
+							wordCount++;
+					}
+					
+					if (!isWhiteSpace(text.charAt(text.length()-1)))
+						wordCount++;
+					
+					StringBuffer message = new StringBuffer("Number of characters: ");
+					message.append(charCount).append(", number of words: ").append(wordCount);
+					
+					JOptionPane.showMessageDialog(rootPane, message.toString(), 
+							"Text Analysis", JOptionPane.INFORMATION_MESSAGE);
 				}
 			});
 			btnTextAnalysis.setPreferredSize(new Dimension(100, 23));
